@@ -6,42 +6,48 @@
     <title>Gryphon Studio - Créateurs d'applications indépendant</title>
     <meta name="description" content="Gryphon Studio est un studio de développement indépendant créant des applications mobiles uniques et engageantes comme 99% et Quotinfo.">
     
-    <!-- Favicon (Utilisons celui de 99% pour l'instant) -->
     <link rel="icon" href="https://gryphon-studio.github.io/99%_app_logo.png" type="image/png">
-    <meta name="theme-color" content="#111827"> <!-- slate-900 -->
+    <meta name="theme-color" content="#030712">
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
-        /* Appliquer la police Inter et un lissage de police */
         body {
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* Fond gris-noir avec une lueur violette subtile en haut à droite */
-            background-color: #111827; /* slate-900 */
-            background-image: radial-gradient(at 100% 0%, rgba(124, 58, 237, 0.1) 0px, transparent 40%);
+            background: linear-gradient(to bottom, #0f0a1e 0%, #030712 50%, #0a0410 100%);
+            min-height: 100vh;
         }
 
-        /* Effet de texte en dégradé */
         .gradient-text {
-            background-image: linear-gradient(to right, #a78bfa, #8b5cf6);
+            background: linear-gradient(135deg, #e5e7eb 0%, #ffffff 50%, #d1d5db 100%);
             -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             background-clip: text;
-            color: transparent;
         }
 
-        /* Animations d'apparition */
-        @keyframes fadeIn {
+        .glow-effect {
+            box-shadow: 0 0 40px rgba(100, 100, 100, 0.15);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -50,71 +56,134 @@
         }
         
         .fade-in {
-            opacity: 0; /* Commence invisible */
-            animation: fadeIn 0.7s ease-out forwards;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background-size: 1000px 100%;
+            animation: shimmer 3s infinite;
+        }
+
+        .glass-effect {
+            background: rgba(30, 30, 35, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(100, 100, 110, 0.2);
+        }
+
+        .card-violet:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+        }
+
+        .card-yellow:hover {
+            border-color: rgba(251, 207, 48, 0.6);
+        }
+
+        .button-glow {
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .button-glow:hover {
+            box-shadow: 0 6px 30px rgba(139, 92, 246, 0.6);
+            transform: translateY(-2px);
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .grid-background {
+            background-image: 
+                linear-gradient(rgba(100, 100, 110, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(100, 100, 110, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
         }
     </style>
 </head>
-<body class="text-slate-200">
+<body class="text-slate-200 relative overflow-x-hidden">
 
-    <!-- Conteneur principal -->
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid-background fixed inset-0 pointer-events-none"></div>
 
-        <!-- Header -->
-        <header class="flex justify-between items-center py-6">
-            <div class="flex items-center gap-3">
-                <!-- MODIFIÉ: Remplacement du div "GS" par le logo -->
-                <img src="https://gryphon-studio.github.io/Gryphon%20Studio.jpg" alt="Logo Gryphon Studio" class="w-10 h-10 rounded-lg shadow-lg">
-                <span class="font-semibold text-lg text-white">Gryphon Studio</span>
-            </div>
-            <!-- Pas de nav, la page est la navigation -->
-        </header>
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <main class="min-h-[75vh]">
+        <main class="min-h-screen">
 
-            <!-- Section Héros -->
-            <section class="text-center py-20 sm:py-28">
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter text-white fade-in" style="animation-delay: 0.1s;">
-                    Créer. Innover. Divertir.
-                </h1>
-                <p class="max-w-2xl mx-auto mt-4 text-lg text-slate-400 fade-in" style="animation-delay: 0.2s;">
-                    Bienvenue chez <span class="font-semibold text-white">Gryphon Studio</span>, un studio de développement indépendant dédié à la création d'expériences mobiles simples, intelligentes et amusantes.
-                </p>
+            <section class="text-center py-20 sm:py-32 flex flex-col items-center relative">
+                
+                <div class="absolute top-20 left-1/4 w-64 h-64 bg-gray-600/10 rounded-full blur-3xl pulse-glow"></div>
+                <div class="absolute bottom-20 right-1/4 w-80 h-80 bg-gray-700/10 rounded-full blur-3xl pulse-glow" style="animation-delay: 1s;"></div>
+                
+                <div class="relative z-10">
+                    <div class="flex items-center justify-center gap-4 mb-8 fade-in" style="animation-delay: 0.1s;">
+                        <img src="https://gryphon-studio.github.io/Gryphon%20Studio.jpg" alt="Logo Gryphon Studio" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl shadow-2xl glow-effect">
+                        <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight">
+                            Gryphon Studio
+                        </h1>
+                    </div>
+                    
+                    <h2 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter mt-6 fade-in gradient-text" style="animation-delay: 0.2s;">
+                        Créer. Innover. Divertir.
+                    </h2>
+                    
+                    <p class="max-w-2xl mx-auto mt-8 text-xl text-slate-400 fade-in leading-relaxed" style="animation-delay: 0.3s;">
+                        Bienvenue dans notre studio de développement indépendant, dédié à la création d'expériences mobiles <span class="text-slate-300 font-semibold">simples</span>, <span class="text-slate-200 font-semibold">intelligentes</span> et <span class="text-white font-semibold">amusantes</span>.
+                    </p>
+                </div>
             </section>
 
-            <!-- Section Applications -->
-            <section class="pb-24 sm:pb-32">
-                <h2 class="text-3xl font-bold tracking-tight text-white text-center sm:text-4xl gradient-text fade-in" style="animation-delay: 0.4s;">
-                    Nos Applications
-                </h2>
+            <section class="pb-32 sm:pb-40">
+                <div class="text-center mb-20">
+                    <h2 class="text-5xl sm:text-6xl font-black tracking-tight text-white fade-in inline-block" style="animation-delay: 0.5s;">
+                        Nos <span class="gradient-text">Applications</span>
+                    </h2>
+                    <div class="h-1.5 w-32 bg-gradient-to-r from-gray-500 via-gray-400 to-gray-500 mx-auto mt-6 rounded-full fade-in" style="animation-delay: 0.6s;"></div>
+                </div>
 
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                     
-                    <!-- App Card 1: 99% -->
-                    <!-- MODIFIÉ: Ajout de 'flex flex-col h-full' pour forcer la hauteur pleine et la disposition en colonne -->
-                    <div class="flex flex-col h-full bg-slate-800/50 p-6 sm:p-8 rounded-xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-violet-900/20 fade-in" style="animation-delay: 0.6s;">
-                        <img src="https://gryphon-studio.github.io/99%25_app_logo.png" alt="Icône 99%" class="w-16 h-16 rounded-2xl mb-4 shadow-lg">
-                        <h3 class="text-2xl font-semibold text-white mb-2">99%</h3>
-                        <p class="text-slate-400 mb-6">
+                    <div class="flex flex-col h-full glass-effect p-8 sm:p-10 rounded-3xl card-hover card-violet fade-in group" style="animation-delay: 0.7s;">
+                        <div class="mb-6">
+                            <img src="https://gryphon-studio.github.io/99%25_app_logo.png" alt="Icône 99%" class="w-20 h-20 rounded-2xl shadow-2xl">
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-3">99%</h3>
+                        <p class="text-slate-300 mb-8 text-lg leading-relaxed flex-grow">
                             Devinez, Vibrez, Triomphez ! Le jeu de mots addictif qui teste votre culture et votre créativité.
                         </p>
-                        <!-- MODIFIÉ: Ajout de 'mt-auto' pour pousser le bouton en bas et 'self-start' pour garder sa largeur -->
-                        <a href="https://gryphon-studio.github.io/app99" class="inline-block bg-violet-600 text-white font-semibold px-5 py-2 rounded-lg shadow-lg shadow-violet-600/30 hover:bg-violet-700 transition-all transform hover:scale-105 mt-auto self-start">
-                            Découvrir 99%
+                        <a href="https://gryphon-studio.github.io/app99" class="inline-block bg-gradient-to-r from-violet-600 to-purple-600 text-white font-bold px-7 py-3.5 rounded-xl button-glow self-start group-hover:from-violet-500 group-hover:to-purple-500">
+                            Découvrir 99% →
                         </a>
                     </div>
                     
-                    <!-- App Card 2: Quotinfo -->
-                    <!-- MODIFIÉ: Ajout de 'flex flex-col h-full' -->
-                    <div class="flex flex-col h-full bg-slate-800/50 p-6 sm:p-8 rounded-xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-amber-900/20 fade-in" style="animation-delay: 0.8s;">
-                         <img src="https://gryphon-studio.github.io/quotinfo_app_logo2.png" alt="Icône Quotinfo" class="w-16 h-16 rounded-2xl mb-4 shadow-lg">
-                        <h3 class="text-2xl font-semibold text-white mb-2">Quotinfo</h3>
-                        <p class="text-slate-400 mb-6">
+                    <div class="flex flex-col h-full glass-effect p-8 sm:p-10 rounded-3xl card-hover card-yellow fade-in group" style="animation-delay: 0.9s;">
+                        <div class="mb-6">
+                            <img src="https://gryphon-studio.github.io/quotinfo_app_logo2.png" alt="Icône Quotinfo" class="w-20 h-20 rounded-2xl shadow-2xl">
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-3">Quotinfo</h3>
+                        <p class="text-slate-300 mb-8 text-lg leading-relaxed flex-grow">
                             Chaque jour, une nouvelle information et 3 questions en quizz rapide pour tester vos connaissances.
                         </p>
-                        <!-- MODIFIÉ: Ajout de 'mt-auto' et 'self-start' -->
-                        <a href="https://gryphon-studio.github.io/appquotinfo" class="inline-block text-gray-900 font-semibold px-5 py-2 rounded-lg shadow-lg shadow-amber-400/30 transition-all transform hover:scale-105 mt-auto self-start" style="background-color: #FBCF30;">
-                            Découvrir Quotinfo
+                        <a href="https://gryphon-studio.github.io/appquotinfo" class="inline-block font-bold px-7 py-3.5 rounded-xl button-glow self-start text-gray-900" style="background: linear-gradient(135deg, #FBCF30 0%, #F5C518 100%); box-shadow: 0 4px 20px rgba(251, 207, 48, 0.4);">
+                            Découvrir Quotinfo →
                         </a>
                     </div>
 
@@ -122,23 +191,28 @@
             </section>
         </main>
 
-        <!-- Footer -->
-        <footer class="text-center py-10 border-t border-slate-800">
-            <p class="text-sm text-slate-500">
-                &copy; <span id="year"></span> Gryphon Studio. Tous droits réservés.
-            </p>
-            <p class="text-sm text-slate-500 mt-2">
-                Ce site héberge le fichier <a href="https://gryphon-studio.github.io/app-ads.txt" target="_blank" rel="noopener" class="underline hover:text-violet-400">app-ads.txt</a>.
-            </p>
+        <footer class="text-center py-12 border-t border-slate-800/50 flex flex-col items-center gap-8">
+            
+            <div class="fade-in" style="animation-delay: 1s;">
+                <a href="mailto:grg57dev@gmail.com" class="inline-block text-white font-semibold px-8 py-4 rounded-xl glass-effect hover:bg-slate-800/60 transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-gray-900/20">
+                    ✉️ Nous Contacter
+                </a>
+            </div>
+
+            <div class="space-y-3">
+                <p class="text-sm text-slate-500">
+                    &copy; <span id="year"></span> Gryphon Studio. Tous droits réservés.
+                </p>
+                <p class="text-sm text-slate-500">
+                    Ce site héberge le fichier <a href="https://gryphon-studio.github.io/app-ads.txt" target="_blank" rel="noopener" class="underline hover:text-violet-400 transition-colors">app-ads.txt</a>.
+                </p>
+            </div>
         </footer>
     </div>
     
     <script>
-        // Mettre à jour l'année dynamiquement
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 
 </body>
 </html>
-
-
