@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gryphon Studio — 99%</title>
-    <meta name="description" content="99% — Devinez, Vibrez, Triomphez ! Le jeu de mots addictif par Gryphon Studio. Téléchargez-le sur le Play Store.">
+    <title>Gryphon Studio - Créateurs d'applications indépendant</title>
+    <meta name="description" content="Gryphon Studio est un studio de développement indépendant créant des applications mobiles uniques et engageantes comme 99% et Quotinfo.">
     
-    <!-- Favicon & Theme Color -->
-    <link rel="icon" href="https://play-lh.googleusercontent.com/V-5-2oEv28y-0kOyW5V0-DRvrjA0__xxb-v52-fEStdhfbYI5s_YAFi91bh-xW4P5Q=w240-h480-rw" type="image/png">
-    <meta name="theme-color" content="#111827">
+    <!-- Favicon (Utilisons celui de 99% pour l'instant) -->
+    <link rel="icon" href="https://gryphon-studio.github.io/99%_app_logo.png" type="image/png">
+    <meta name="theme-color" content="#111827"> <!-- slate-900 -->
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,17 +24,34 @@
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* Arrière-plan subtil avec un dégradé radial pour un effet de lueur */
-            background-color: #0f0b13;
-            background-image: radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.15) 0px, transparent 50%);
+            /* Fond gris-noir avec une lueur violette subtile en haut à droite */
+            background-color: #111827; /* slate-900 */
+            background-image: radial-gradient(at 100% 0%, rgba(124, 58, 237, 0.1) 0px, transparent 40%);
         }
 
-        /* Effet de texte en dégradé pour le titre principal */
+        /* Effet de texte en dégradé */
         .gradient-text {
             background-image: linear-gradient(to right, #a78bfa, #8b5cf6);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+        }
+
+        /* Animations d'apparition */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            opacity: 0; /* Commence invisible */
+            animation: fadeIn 0.7s ease-out forwards;
         }
     </style>
 </head>
@@ -51,90 +68,53 @@
                 </div>
                 <span class="font-semibold text-lg text-white">Gryphon Studio</span>
             </div>
-            <nav>
-                <a href="https://gryphon-studio.github.io/website99-/app-ads.txt" target="_blank" rel="noopener" class="text-sm font-medium text-slate-400 hover:text-violet-400 transition-colors">
-                    App-Ads.txt
-                </a>
-            </nav>
+            <!-- Pas de nav, la page est la navigation -->
         </header>
 
-        <main>
+        <main class="min-h-[75vh]">
 
             <!-- Section Héros -->
             <section class="text-center py-20 sm:py-28">
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter text-white">
-                    Le jeu de mots qui vous met au défi.
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter text-white fade-in" style="animation-delay: 0.1s;">
+                    Créer. Innover. Divertir.
                 </h1>
-                <p class="max-w-2xl mx-auto mt-4 text-lg text-slate-400">
-                    Plongez dans 99%, le jeu addictif qui teste votre culture et votre créativité. Devinez les mots cachés, progressez à travers les niveaux et visez la victoire.
+                <p class="max-w-2xl mx-auto mt-4 text-lg text-slate-400 fade-in" style="animation-delay: 0.2s;">
+                    Bienvenue chez <span class="font-semibold text-white">Gryphon Studio</span>, un studio de développement indépendant dédié à la création d'expériences mobiles simples, intelligentes et amusantes.
                 </p>
-                <div class="mt-8 flex justify-center items-center gap-4">
-                    <a href="https://play.google.com/store/apps/details?id=com.grg.a99" target="_blank" rel="noopener" class="bg-violet-600 text-white font-semibold px-6 py-3 rounded-lg shadow-lg shadow-violet-600/30 hover:bg-violet-700 transition-all transform hover:scale-105">
-                        Télécharger sur Google Play
-                    </a>
-                </div>
             </section>
 
-            <!-- Section Fonctionnalités -->
-            <section class="py-16 sm:py-24">
-                <div class="text-center">
-                    <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl gradient-text">
-                        Pourquoi 99% est unique ?
-                    </h2>
-                    <p class="mt-4 max-w-2xl mx-auto text-lg text-slate-400">
-                        Une expérience de jeu conçue pour être simple, intelligente et amusante.
-                    </p>
-                </div>
+            <!-- Section Applications -->
+            <section class="pb-24 sm:pb-32">
+                <h2 class="text-3xl font-bold tracking-tight text-white text-center sm:text-4xl gradient-text fade-in" style="animation-delay: 0.4s;">
+                    Nos Applications
+                </h2>
 
                 <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Feature 1 -->
-                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
-                            </div>
-                            <h3 class="text-lg font-semibold text-white">Concept Original</h3>
-                        </div>
-                        <p class="mt-3 text-slate-400">
-                            Chaque niveau présente 3 thèmes. Trouvez les mots associés pour progresser et débloquer des défis de plus en plus stimulants.
+                    
+                    <!-- App Card 1: 99% -->
+                    <div class="bg-slate-800/50 p-6 sm:p-8 rounded-xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-violet-900/20 fade-in" style="animation-delay: 0.6s;">
+                        <img src="https://gryphon-studio.github.io/99%_app_logo.png" alt="Icône 99%" class="w-16 h-16 rounded-2xl mb-4 shadow-lg">
+                        <h3 class="text-2xl font-semibold text-white mb-2">99%</h3>
+                        <p class="text-slate-400 mb-6">
+                            Devinez, Vibrez, Triomphez ! Le jeu de mots addictif qui teste votre culture et votre créativité.
                         </p>
+                        <a href="https://gryphon-studio.github.io/app99" class="inline-block bg-violet-600 text-white font-semibold px-5 py-2 rounded-lg shadow-lg shadow-violet-600/30 hover:bg-violet-700 transition-all transform hover:scale-105">
+                            Découvrir 99%
+                        </a>
                     </div>
-                    <!-- Feature 2 -->
-                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 2.5a2.5 2.5 0 0 1 2.5 2.5c0 .828-.423 1.556-1.055 2.033-.631.476-1.445.714-2.445.714H12c-.954 0-1.767-.21-2.404-.633C8.96 9.133 8.5 8.452 8.5 7.7c0-1.29.98-2.343 2.188-2.343A2.32 2.32 0 0 1 13 3a2.41 2.41 0 0 1 2.5-2.5z"/><path d="M12 12c-2.445 0-4.398.37-6.055.998C4.289 13.621 3.5 14.73 3.5 16c0 1.573 1.39 2.846 3.11 2.846h.582c.421 2.12.973 3.486 1.808 3.486s1.387-1.366 1.808-3.486h.584c1.72 0 3.11-1.273 3.11-2.846 0-1.27-.789-2.379-2.445-3.002C16.398 12.37 14.445 12 12 12z"/></svg>
-                            </div>
-                            <h3 class="text-lg font-semibold text-white">Défis Variés</h3>
-                        </div>
-                        <p class="mt-3 text-slate-400">
-                            Explorez des milliers de mots sur la pop culture, la science, la cuisine, et bien plus. Il y a toujours quelque chose de nouveau à découvrir.
+                    
+                    <!-- App Card 2: Quotinfo -->
+                    <div class="bg-slate-800/50 p-6 sm:p-8 rounded-xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-violet-900/20 fade-in" style="animation-delay: 0.8s;">
+                         <img src="https://gryphon-studio.github.io/quotinfo_app_logo2.png" alt="Icône Quotinfo" class="w-16 h-16 rounded-2xl mb-4 shadow-lg">
+                        <h3 class="text-2xl font-semibold text-white mb-2">Quotinfo</h3>
+                        <p class="text-slate-400 mb-6">
+                            Chaque jour, une nouvelle information et 3 questions en quizz rapide pour tester vos connaissances.
                         </p>
+                        <span class="inline-block bg-slate-700 text-slate-400 font-semibold px-5 py-2 rounded-lg cursor-not-allowed">
+                            Bientôt disponible
+                        </span>
                     </div>
-                    <!-- Feature 3 -->
-                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-                        <div class="flex items-center gap-4">
-                             <div class="w-12 h-12 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9 9 9 0 0 0-9 9 9 9 0 0 0 9 9Z"/></svg>
-                            </div>
-                            <h3 class="text-lg font-semibold text-white">Jokers Intelligents</h3>
-                        </div>
-                        <p class="mt-3 text-slate-400">
-                            Un mot vous résiste ? Utilisez un joker pour révéler une lettre ou un mot entier et ne jamais perdre le rythme.
-                        </p>
-                    </div>
-                    <!-- Feature 4 -->
-                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-                        <div class="flex items-center gap-4">
-                           <div class="w-12 h-12 bg-violet-600/20 text-violet-400 rounded-lg flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/><path d="M12 16V6a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v4a1 1 0 0 0 1 1h2.5"/><path d="m12 16 1.3-1.3a2.4 2.4 0 0 1 3.4 0l1.6 1.6"/><path d="M12 16V6a3 3 0 0 1 3-3h3a3 3 0 0 1 3 3v4a1 1 0 0 1-1 1h-2.5"/></svg>
-                            </div>
-                            <h3 class="text-lg font-semibold text-white">Jouez Partout</h3>
-                        </div>
-                        <p class="mt-3 text-slate-400">
-                            Pas de connexion ? Pas de problème. 99% est entièrement jouable hors-ligne, parfait pour les transports ou les moments de pause.
-                        </p>
-                    </div>
+
                 </div>
             </section>
         </main>
@@ -145,7 +125,7 @@
                 &copy; <span id="year"></span> Gryphon Studio. Tous droits réservés.
             </p>
             <p class="text-sm text-slate-500 mt-2">
-                Ce site héberge le fichier <a href="https://gryphon-studio.github.io/website99-/app-ads.txt" target="_blank" rel="noopener" class="underline hover:text-violet-400">app-ads.txt</a>.
+                Ce site héberge le fichier <a href="https://gryphon-studio.github.io/app-ads.txt" target="_blank" rel="noopener" class="underline hover:text-violet-400">app-ads.txt</a>.
             </p>
         </footer>
     </div>
@@ -157,4 +137,5 @@
 
 </body>
 </html>
+
 
