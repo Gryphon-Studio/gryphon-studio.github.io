@@ -91,27 +91,31 @@
                 <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
                     
                     <!-- App Card 1: 99% -->
-                    <div class="bg-slate-800/50 p-6 sm:p-8 rounded-xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-violet-900/20 fade-in" style="animation-delay: 0.6s;">
+                    <!-- MODIFIÉ: Ajout de 'flex flex-col h-full' pour forcer la hauteur pleine et la disposition en colonne -->
+                    <div class="flex flex-col h-full bg-slate-800/50 p-6 sm:p-8 rounded-xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-violet-900/20 fade-in" style="animation-delay: 0.6s;">
                         <img src="https://gryphon-studio.github.io/99%25_app_logo.png" alt="Icône 99%" class="w-16 h-16 rounded-2xl mb-4 shadow-lg">
                         <h3 class="text-2xl font-semibold text-white mb-2">99%</h3>
                         <p class="text-slate-400 mb-6">
                             Devinez, Vibrez, Triomphez ! Le jeu de mots addictif qui teste votre culture et votre créativité.
                         </p>
-                        <a href="https://gryphon-studio.github.io/app99" class="inline-block bg-violet-600 text-white font-semibold px-5 py-2 rounded-lg shadow-lg shadow-violet-600/30 hover:bg-violet-700 transition-all transform hover:scale-105">
+                        <!-- MODIFIÉ: Ajout de 'mt-auto' pour pousser le bouton en bas et 'self-start' pour garder sa largeur -->
+                        <a href="https://gryphon-studio.github.io/app99" class="inline-block bg-violet-600 text-white font-semibold px-5 py-2 rounded-lg shadow-lg shadow-violet-600/30 hover:bg-violet-700 transition-all transform hover:scale-105 mt-auto self-start">
                             Découvrir 99%
                         </a>
                     </div>
                     
                     <!-- App Card 2: Quotinfo -->
-                    <div class="bg-slate-800/50 p-6 sm:p-8 rounded-xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-violet-900/20 fade-in" style="animation-delay: 0.8s;">
+                    <!-- MODIFIÉ: Ajout de 'flex flex-col h-full' -->
+                    <div class="flex flex-col h-full bg-slate-800/50 p-6 sm:p-8 rounded-xl border border-slate-700 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl hover:shadow-amber-900/20 fade-in" style="animation-delay: 0.8s;">
                          <img src="https://gryphon-studio.github.io/quotinfo_app_logo2.png" alt="Icône Quotinfo" class="w-16 h-16 rounded-2xl mb-4 shadow-lg">
                         <h3 class="text-2xl font-semibold text-white mb-2">Quotinfo</h3>
                         <p class="text-slate-400 mb-6">
                             Chaque jour, une nouvelle information et 3 questions en quizz rapide pour tester vos connaissances.
                         </p>
-                        <span class="inline-block bg-slate-700 text-slate-400 font-semibold px-5 py-2 rounded-lg cursor-not-allowed">
-                            Bientôt disponible
-                        </span>
+                        <!-- MODIFIÉ: Ajout de 'mt-auto' et 'self-start' -->
+                        <a href="https://gryphon-studio.github.io/appquotinfo" class="inline-block text-gray-900 font-semibold px-5 py-2 rounded-lg shadow-lg shadow-amber-400/30 transition-all transform hover:scale-105 mt-auto self-start" style="background-color: #FBCF30;">
+                            Découvrir Quotinfo
+                        </a>
                     </div>
 
                 </div>
@@ -136,4 +140,5 @@
 
 </body>
 </html>
+
 
