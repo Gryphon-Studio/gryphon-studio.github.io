@@ -1,0 +1,82 @@
+Politique de Confidentialité
+Dernière mise à jour : 19 Novembre 2025
+
+Cette politique de confidentialité décrit comment Gryphon Studio ("nous", "notre" ou "nos") gère vos informations lorsque vous utilisez notre application mobile 99° (l' "Application").
+
+Si vous n'êtes pas d'accord avec nos politiques et pratiques, veuillez ne pas utiliser nos services. Si vous avez des questions ou des préoccupations, veuillez nous contacter à grg57dev@gmail.com.
+
+
+
+1. QUELLES INFORMATIONS COLLECTONS-NOUS ?
+Collecte directe par le développeur
+Pour faire simple : Nous ne collectons aucune donnée personnelle vous concernant directement.
+
+Contrairement à d'autres services, nous ne vous demandons pas de créer un compte, de fournir votre email, votre nom ou votre numéro de téléphone pour jouer à 99°. Nous ne traitons pas d'informations sensibles.
+
+Collecte automatique par des services tiers
+Bien que nous ne collections pas de données nous-mêmes, l'Application utilise des services tiers qui peuvent collecter des informations utilisées pour vous identifier. Ces données sont nécessaires pour :
+
+Afficher des publicités (Bandeaux publicitaires).
+
+Gérer les achats intégrés (Monnaie virtuelle).
+
+Assurer la stabilité de l'application (Logs d'erreurs).
+
+Les types de données collectées par ces tiers peuvent inclure :
+
+L'identifiant publicitaire de votre appareil (Advertising ID).
+
+Des données de localisation approximative (pour la publicité ciblée).
+
+Des identifiants d'appareil et des informations sur les performances (pour les diagnostics).
+
+2. PUBLICITÉS (Bandeaux Publicitaires)
+Nous affichons des publicités dans notre Application pour financer nos services. Ces publicités sont fournies par des réseaux publicitaires tiers.
+
+Ces services peuvent utiliser des cookies ou des technologies similaires (comme l'Identifiant Publicitaire Google) pour collecter des informations sur vos interactions avec l'Application. Cela leur permet de vous proposer des publicités pertinentes basées sur vos centres d'intérêt.
+
+Note sur les liens externes : Si vous cliquez sur une publicité, vous serez redirigé vers un site tiers. Nous ne sommes pas responsables de la sécurité ou de la confidentialité des données que vous fournissez à ces tiers. Les données collectées par des tiers ne sont pas couvertes par cette politique de confidentialité.
+
+
+3. ACHATS IN-APP (Achats intégrés)
+L'Application permet d'acheter de la monnaie virtuelle utilisable dans le jeu.
+
+Traitement des paiements : Toutes les transactions financières sont gérées directement par la plateforme de téléchargement (Google Play Store).
+
+Sécurité : Gryphon Studio n'a jamais accès à vos informations de carte de crédit ou bancaires. Nous recevons uniquement une confirmation de Google indiquant que l'achat a été effectué pour créditer votre compte en jeu.
+
+4. COMMENT UTILISONS-NOUS VOS INFORMATIONS ?
+Puisque nous ne collectons pas de données directement, nous n'utilisons pas vos données personnelles. Cependant, les services tiers mentionnés ci-dessus traitent les informations pour :
+
+Fournir, améliorer et administrer les services (ex: valider un achat).
+
+Détecter et prévenir la fraude.
+
+Se conformer aux obligations légales.
+
+5. PARTAGE D'INFORMATIONS
+Nous ne vendons ni ne louons vos données personnelles. Nous pouvons partager des informations anonymes ou agrégées dans les situations suivantes :
+
+
+Transferts d'entreprise : Dans le cadre d'une fusion, vente d'actifs ou acquisition de tout ou partie de notre entreprise.
+
+Obligations légales : Si la loi l'exige pour protéger nos droits ou répondre à une procédure judiciaire.
+
+6. SÉCURITÉ DES DONNÉES
+Nous avons mis en place des processus organisationnels et techniques appropriés pour protéger le peu d'informations transitant par l'application. Cependant, aucune transmission électronique sur Internet n'est garantie à 100 % sécurisée.
+
+
+7. ENFANTS
+Notre application est destinée au grand public. Si nous découvrons que nous avons collecté involontairement des informations personnelles auprès d'un enfant sans vérification du consentement parental, nous supprimerons ces informations.
+
+8. VOS DROITS ET CONTACT
+Selon votre localisation (par exemple en Europe avec le RGPD), vous disposez de droits concernant vos données personnelles (accès, rectification, suppression).
+
+
+Puisque nous ne stockons pas vos données, le moyen le plus simple d'exercer vos droits (notamment pour les données publicitaires) est de gérer les paramètres de confidentialité directement dans les réglages de votre téléphone ou via votre compte Google.
+
+Nous contacter
+Pour toute question relative à cette politique de confidentialité, vous pouvez nous contacter par email à :
+
+
+grg57dev@gmail.com.
