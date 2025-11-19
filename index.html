@@ -1,235 +1,391 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gryphon Studio - Créateurs d'applications indépendant</title>
-    <meta name="description" content="Gryphon Studio est un studio de développement indépendant créant des applications mobiles uniques et engageantes comme 99% et Quotinfo.">
+    <title>Gryphon Studio - Créateur d'expériences numériques</title>
+    <meta name="description" content="Studio de développement d'applications mobiles innovantes.">
     
-    <link rel="icon" href="https://gryphon-studio.github.io/favicon_transparent.png" type="image/png">
-    <meta name="theme-color" content="#030712">
-
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
+    
+    <!-- Google Fonts (Outfit pour un look moderne/tech) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+        /* Configuration de base */
         body {
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            background: linear-gradient(to bottom, #0f0a1e 0%, #030712 50%, #0a0410 100%);
-            min-height: 100vh;
+            font-family: 'Outfit', sans-serif;
+            background-color: #09090b; /* Zinc 950 */
+            color: #fafafa; /* Zinc 50 */
+            overflow-x: hidden;
         }
 
-        .gradient-text {
-            background: linear-gradient(135deg, #e5e7eb 0%, #ffffff 50%, #d1d5db 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* Masquer la barre de défilement tout en gardant le scroll */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46; 
         }
 
-        .glow-effect {
-            box-shadow: 0 0 40px rgba(100, 100, 100, 0.15);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .float-animation {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .fade-in {
+        /* Classes utilitaires pour l'animation au scroll */
+        .reveal {
             opacity: 0;
-            animation: fadeInUp 0.8s ease-out forwards;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
+        /* Effet de verre pour le header */
+        .glass-nav {
+            background: rgba(9, 9, 11, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Animation subtile du gradient sur les cartes */
         .card-hover {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .card-hover:hover {
-            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 255, 255, 0.1);
+            background-color: rgba(39, 39, 42, 0.8);
+            z-index: 10;
         }
-
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-
-        .shimmer {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            background-size: 1000px 100%;
-            animation: shimmer 3s infinite;
-        }
-
-        .glass-effect {
-            background: rgba(30, 30, 35, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(100, 100, 110, 0.2);
-        }
-
-        .card-violet:hover {
-            border-color: rgba(139, 92, 246, 0.6);
-        }
-
-        .card-yellow:hover {
-            border-color: rgba(251, 207, 48, 0.6);
-        }
-
-        .card-turquoise:hover {
-            border-color: rgba(20, 184, 166, 0.6);
-        }
-
-        .button-glow {
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .button-glow:hover {
-            box-shadow: 0 6px 30px rgba(139, 92, 246, 0.6);
-            transform: translateY(-2px);
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .pulse-glow {
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-
-        .grid-background {
-            background-image: 
-                linear-gradient(rgba(100, 100, 110, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(100, 100, 110, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+        
+        /* Canvas background container */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
         }
     </style>
 </head>
-<body class="text-slate-200 relative overflow-x-hidden">
+<body class="relative">
 
-    <div class="grid-background fixed inset-0 pointer-events-none"></div>
+    <!-- Background Animation Canvas -->
+    <div id="canvas-container">
+        <canvas id="starCanvas"></canvas>
+    </div>
 
-    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        <main class="min-h-screen">
-
-            <section class="text-center py-20 sm:py-32 flex flex-col items-center relative">
-                
-                <div class="absolute top-20 left-1/4 w-64 h-64 bg-gray-600/10 rounded-full blur-3xl pulse-glow"></div>
-                <div class="absolute bottom-20 right-1/4 w-80 h-80 bg-gray-700/10 rounded-full blur-3xl pulse-glow" style="animation-delay: 1s;"></div>
-                
-                <div class="relative z-10">
-                    <div class="flex items-center justify-center gap-4 mb-8 fade-in" style="animation-delay: 0.1s;">
-                        <img src="https://gryphon-studio.github.io/Gryphon%20Studio.jpg" alt="Logo Gryphon Studio" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl shadow-2xl glow-effect">
-                        <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight">
-                            Gryphon Studio
-                        </h1>
-                    </div>
-                    
-                    <h2 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter mt-6 fade-in gradient-text" style="animation-delay: 0.2s;">
-                        Créer. Innover. Divertir.
-                    </h2>
-                    
-                    <p class="max-w-2xl mx-auto mt-8 text-xl text-slate-400 fade-in leading-relaxed" style="animation-delay: 0.3s;">
-                        Bienvenue dans notre studio de développement indépendant, dédié à la création d'expériences mobiles <span class="text-slate-300 font-semibold">simples</span>, <span class="text-slate-200 font-semibold">intelligentes</span> et <span class="text-white font-semibold">amusantes</span>.
-                    </p>
+    <!-- Navigation -->
+    <header id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-tighter flex items-center gap-2">
+                <!-- Petit logo nav -->
+                <div class="w-8 h-8 rounded-full overflow-hidden border border-white/20">
+                    <img src="https://gryphon-studio.github.io/Gryphon%20Studio.jpg" alt="Gryphon Mini" class="w-full h-full object-cover">
                 </div>
-            </section>
-
-            <section class="pb-32 sm:pb-40">
-                <div class="text-center mb-20">
-                    <h2 class="text-5xl sm:text-6xl font-black tracking-tight text-white fade-in inline-block" style="animation-delay: 0.5s;">
-                        Nos <span class="gradient-text">Applications</span>
-                    </h2>
-                    <div class="h-1.5 w-32 bg-gradient-to-r from-gray-500 via-gray-400 to-gray-500 mx-auto mt-6 rounded-full fade-in" style="animation-delay: 0.6s;"></div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-                    
-                    <div class="flex flex-col h-full glass-effect p-8 sm:p-10 rounded-3xl card-hover card-violet fade-in group" style="animation-delay: 0.7s;">
-                        <div class="mb-6">
-                            <img src="https://gryphon-studio.github.io/99%25_app_logo.png" alt="Icône 99%" class="w-20 h-20 rounded-2xl shadow-2xl">
-                        </div>
-                        <h3 class="text-3xl font-bold text-white mb-3">99%</h3>
-                        <p class="text-slate-300 mb-8 text-lg leading-relaxed flex-grow">
-                            Devinez, Vibrez, Triomphez ! Le jeu de mots addictif qui teste votre culture et votre créativité.
-                        </p>
-                        <a href="https://gryphon-studio.github.io/app99" class="inline-block bg-gradient-to-r from-violet-600 to-purple-600 text-white font-bold px-7 py-3.5 rounded-xl button-glow self-start group-hover:from-violet-500 group-hover:to-purple-500">
-                            Découvrir 99% →
-                        </a>
-                    </div>
-                    
-                    <div class="flex flex-col h-full glass-effect p-8 sm:p-10 rounded-3xl card-hover card-yellow fade-in group" style="animation-delay: 0.9s;">
-                        <div class="mb-6">
-                            <img src="https://gryphon-studio.github.io/quotinfo_app_logo2.png" alt="Icône Quotinfo" class="w-20 h-20 rounded-2xl shadow-2xl">
-                        </div>
-                        <h3 class="text-3xl font-bold text-white mb-3">Quotinfo</h3>
-                        <p class="text-slate-300 mb-8 text-lg leading-relaxed flex-grow">
-                            Chaque jour, une nouvelle information et 3 questions en quizz rapide pour tester vos connaissances.
-                        </p>
-                        <a href="https://gryphon-studio.github.io/appquotinfo" class="inline-block font-bold px-7 py-3.5 rounded-xl button-glow self-start text-gray-900" style="background: linear-gradient(135deg, #FBCF30 0%, #F5C518 100%); box-shadow: 0 4px 20px rgba(251, 207, 48, 0.4);">
-                            Découvrir Quotinfo →
-                        </a>
-                    </div>
-
-                    <div class="flex flex-col h-full glass-effect p-8 sm:p-10 rounded-3xl card-hover card-turquoise fade-in group" style="animation-delay: 1.1s;">
-                        <div class="mb-6">
-                            <img src="https://gryphon-studio.github.io/focusisland_app_logo.png" alt="Icône Calm Island" class="w-20 h-20 rounded-2xl shadow-2xl">
-                        </div>
-                        <h3 class="text-3xl font-bold text-white mb-3">Focus Island</h3>
-                        <p class="text-slate-300 mb-8 text-lg leading-relaxed flex-grow">
-                            Technique Pomodoro gamifiée : concentrez-vous, atteignez vos objectifs et faites évoluer votre île paradisiaque.
-                        </p>
-                        <a href="https://gryphon-studio.github.io/appcalmisland" class="inline-block bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-bold px-7 py-3.5 rounded-xl self-start group-hover:from-teal-400 group-hover:to-cyan-400 transition-all transform hover:scale-105" style="box-shadow: 0 4px 20px rgba(20, 184, 166, 0.4);">
-                            Découvrir Calm Island →
-                        </a>
-                    </div>
-
-                </div>
-            </section>
-        </main>
-
-        <footer class="text-center py-12 border-t border-slate-800/50 flex flex-col items-center gap-8">
+                <span>GRYPHON STUDIO</span>
+            </a>
             
-            <div class="fade-in" style="animation-delay: 1s;">
-                <a href="mailto:grg57dev@gmail.com" class="inline-block text-white font-semibold px-8 py-4 rounded-xl glass-effect hover:bg-slate-800/60 transition-all transform hover:scale-105 hover:shadow-lg hover:shadow-gray-900/20">
-                    Contact
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+                <a href="#home" class="hover:text-white transition-colors">Accueil</a>
+                <a href="#projects" class="hover:text-white transition-colors">Nos Applications</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-zinc-950 border-b border-zinc-800 p-4 md:hidden">
+            <nav class="flex flex-col gap-4 text-center">
+                <a href="#home" class="text-zinc-400 hover:text-white">Accueil</a>
+                <a href="#projects" class="text-zinc-400 hover:text-white">Nos Applications</a>
+                <a href="#contact" class="text-zinc-400 hover:text-white">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-4 pt-20 relative">
+        
+        <div class="reveal flex flex-col items-center max-w-4xl mx-auto">
+            <!-- Main Logo - Animation hover supprimée -->
+            <div class="relative w-32 h-32 md:w-48 md:h-48 mb-8 rounded-full p-1 bg-gradient-to-b from-zinc-700 to-transparent">
+                <div class="w-full h-full rounded-full overflow-hidden bg-black border-4 border-zinc-900 shadow-2xl">
+                    <img src="https://gryphon-studio.github.io/Gryphon%20Studio.jpg" alt="Gryphon Studio Logo" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-500">
+                L'Art du Code. <br> La Science du Jeu.
+            </h1>
+            
+            <p class="text-lg md:text-xl text-zinc-400 mb-10 max-w-2xl leading-relaxed">
+                Chez <span class="text-white font-semibold">Gryphon Studio</span>, nous ne créons pas seulement des applications. Nous concevons des expériences numériques immersives qui testent votre esprit et stimulent votre curiosité.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#projects" class="px-8 py-3 bg-white text-black rounded-full font-bold hover:bg-zinc-200 transition-all flex items-center justify-center gap-2">
+                    Découvrir nos créations <i data-lucide="arrow-down" class="w-4 h-4"></i>
                 </a>
             </div>
+        </div>
 
-            <div class="space-y-3">
-                <p class="text-sm text-slate-500">
-                    &copy; <span id="year"></span> Gryphon Studio. Tous droits réservés.
-                </p>
-                <p class="text-sm text-slate-500">
-                    Ce site héberge le fichier <a href="https://gryphon-studio.github.io/app-ads.txt" target="_blank" rel="noopener" class="underline hover:text-violet-400 transition-colors">app-ads.txt</a>.
-                </p>
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 animate-bounce text-zinc-500">
+            <i data-lucide="mouse" class="w-6 h-6"></i>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-zinc-900/30">
+        <div class="container mx-auto px-6">
+            <div class="mb-16 text-center reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Nos Réalisations</h2>
+                <div class="h-1 w-20 bg-white mx-auto rounded-full"></div>
+                <p class="mt-4 text-zinc-400">Explorez notre écosystème d'applications mobiles.</p>
             </div>
-        </footer>
-    </div>
-    
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
 
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- App 1: 99% -->
+                <!-- NOUVEAU DESIGN : Glow violet subtil depuis le haut -->
+                <article class="reveal group relative bg-zinc-900 border border-zinc-700 shadow-xl rounded-2xl p-8 card-hover transition-all duration-300 flex flex-col justify-between h-full overflow-hidden">
+                    
+                    <!-- Glow Effect (Spotlight) -->
+                    <div class="absolute inset-0 bg-gradient-to-b from-purple-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-center mb-6">
+                            <div class="w-28 h-28 rounded-2xl overflow-hidden shadow-2xl border border-zinc-800 group-hover:scale-105 transition-transform duration-300">
+                                <img src="https://gryphon-studio.github.io/99%25_app_logo.png" alt="99% Logo" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-center mb-2 group-hover:text-purple-400 transition-colors">99%</h3>
+                        
+                        <p class="text-zinc-400 text-center leading-relaxed mb-8">
+                            Devinez, Vibrez, Triomphez ! Le jeu de mots addictif qui teste votre culture et votre créativité.
+                        </p>
+                    </div>
+                    
+                    <a href="https://gryphon-studio.github.io/app99" class="relative z-10 block w-full py-3 bg-zinc-800 hover:bg-white hover:text-black text-center rounded-lg text-sm font-bold transition-colors duration-300">
+                        Découvrir 99%
+                    </a>
+                </article>
+
+                <!-- App 2: Quotinfo -->
+                <!-- NOUVEAU DESIGN : Glow jaune subtil depuis le haut -->
+                <article class="reveal group relative bg-zinc-900 border border-zinc-700 shadow-xl rounded-2xl p-8 card-hover transition-all duration-300 flex flex-col justify-between h-full overflow-hidden" style="transition-delay: 100ms;">
+                    
+                    <!-- Glow Effect (Spotlight) -->
+                    <div class="absolute inset-0 bg-gradient-to-b from-yellow-500/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex justify-center mb-6">
+                            <div class="w-28 h-28 rounded-2xl overflow-hidden shadow-2xl border border-zinc-800 group-hover:scale-105 transition-transform duration-300">
+                                <img src="https://gryphon-studio.github.io/quotinfo_app_logo2.png" alt="Quotinfo Logo" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-center mb-2 group-hover:text-yellow-300 transition-colors">Quotinfo</h3>
+
+                        <p class="text-zinc-400 text-center leading-relaxed mb-8">
+                            Chaque jour, une nouvelle information et 3 questions en quizz rapide pour tester vos connaissances.
+                        </p>
+                    </div>
+                    
+                    <a href="https://gryphon-studio.github.io/appquotinfo" class="relative z-10 block w-full py-3 bg-zinc-800 hover:bg-white hover:text-black text-center rounded-lg text-sm font-bold transition-colors duration-300">
+                        Découvrir Quotinfo
+                    </a>
+                </article>
+
+                <!-- App 3: 99° -->
+                <!-- NOUVEAU DESIGN : Glow bleu subtil depuis le haut -->
+                <article class="reveal group relative bg-zinc-900 border border-zinc-700 shadow-xl rounded-2xl p-8 card-hover transition-all duration-300 flex flex-col justify-between h-full overflow-hidden" style="transition-delay: 200ms;">
+                    
+                    <!-- Glow Effect (Spotlight) -->
+                    <div class="absolute inset-0 bg-gradient-to-b from-sky-500/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex justify-center mb-6">
+                            <div class="w-28 h-28 rounded-2xl overflow-hidden shadow-2xl border border-zinc-800 group-hover:scale-105 transition-transform duration-300">
+                                <img src="https://gryphon-studio.github.io/99degre_app_logo.png" alt="99° Logo" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-center mb-2 group-hover:text-sky-300 transition-colors">99°</h3>
+
+                        <p class="text-zinc-400 text-center leading-relaxed mb-8">
+                            Saurez-vous positionner vos pins où il faut ? Testez votre culture générale en vous amusant.
+                        </p>
+                    </div>
+                    
+                    <a href="https://gryphon-studio.github.io/app99degre" class="relative z-10 block w-full py-3 bg-zinc-800 hover:bg-white hover:text-black text-center rounded-lg text-sm font-bold transition-colors duration-300">
+                        Découvrir 99°
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-zinc-900 transform skew-y-3 z-0 origin-bottom-left"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 text-center max-w-2xl">
+            <div class="reveal">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">Contactez-nous</h2>
+                <p class="text-zinc-400 text-lg mb-8">
+                    Nous sommes toujours ravis d'échanger. Pour toute question, collaboration ou simplement pour dire bonjour, n'hésitez pas à nous contacter.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <!-- Bouton Contact modifié -->
+                    <a href="mailto:grg57dev@gmail.com" class="flex items-center justify-center gap-3 px-6 py-3 bg-white text-black rounded-full font-bold hover:bg-zinc-200 transition-colors">
+                        <i data-lucide="mail" class="w-5 h-5"></i>
+                        Contact
+                    </a>
+                    <div class="flex items-center justify-center gap-3 px-6 py-3 bg-zinc-800 text-zinc-300 rounded-full font-bold">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        France
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-950 py-8 border-t border-zinc-900 relative z-10">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center gap-2 mb-4 opacity-50 grayscale hover:grayscale-0 transition-all">
+                 <img src="https://gryphon-studio.github.io/Gryphon%20Studio.jpg" alt="Gryphon Studio" class="w-8 h-8 rounded-full">
+                 <span class="font-bold tracking-wider">GRYPHON STUDIO</span>
+            </div>
+            <p class="text-zinc-600 text-sm">
+                &copy; 2023-2024 Gryphon Studio. Tous droits réservés. <br>
+                <a href="#" class="hover:text-white transition-colors">Mentions Légales</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialisation des icônes Lucide
+        lucide.createIcons();
+
+        // --- Logique du Menu Mobile ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- Effet Glassmorphism au scroll pour la navbar ---
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-nav');
+            } else {
+                navbar.classList.remove('glass-nav');
+            }
+        });
+
+        // --- Intersection Observer pour les animations d'apparition ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Ne jouer qu'une fois
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // --- Animation Canvas (Particules subtiles) ---
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initParticles();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 1.5;
+                this.speedX = Math.random() * 0.2 - 0.1;
+                this.speedY = Math.random() * 0.2 - 0.1;
+                this.opacity = Math.random() * 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > width) this.x = 0;
+                if (this.x < 0) this.x = width;
+                if (this.y > height) this.y = 0;
+                if (this.y < 0) this.y = height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const particleCount = Math.floor(width * 0.15); // Augmenté de 0.05 à 0.15 pour plus de densité
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+
+    </script>
 </body>
 </html>
