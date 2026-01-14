@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gryphon-studio.github.io/sitemap.xml
