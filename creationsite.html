@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Création Site Web - Gryphon Studio</title>
+    <meta name="description" content="Offre de création de site web professionnel abordable par Gryphon Studio.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://gryphon-studio.github.io/favicon_transparent.png" type="image/png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Styles identiques à la page principale */
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #09090b;
+            color: #fafafa;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-nav {
+            background: rgba(9, 9, 11, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* Styles spécifiques aux cartes de prix */
+        .price-card {
+            transition: all 0.3s ease;
+            background: rgba(24, 24, 27, 0.6);
+            backdrop-filter: blur(8px);
+        }
+        .price-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(234, 179, 8, 0.5);
+            box-shadow: 0 10px 40px -10px rgba(234, 179, 8, 0.15);
+        }
+
+        .check-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: #d4d4d8;
+        }
+        .check-list li i {
+            color: #eab308; /* Yellow-500 */
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+        
+        /* Animation pour le succès */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Background Animation Canvas -->
+    <div id="canvas-container">
+        <canvas id="starCanvas"></canvas>
+    </div>
+
+    <!-- Navigation (Liens adaptés pour pointer vers l'accueil) -->
+    <header id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold tracking-tighter flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full overflow-hidden border border-white/20">
+                    <img src="https://gryphon-studio.github.io/Gryphon%20Studio.jpg" alt="Gryphon Mini" class="w-full h-full object-cover">
+                </div>
+                <span>GRYPHON STUDIO</span>
+            </a>
+            
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+                <a href="index.html" class="hover:text-white transition-colors">Retour à l'accueil</a>
+                <a href="#details" class="hover:text-yellow-400 transition-colors text-white">L'Offre Web</a>
+                <a href="#order" class="px-4 py-2 bg-white text-black rounded-full font-bold hover:bg-zinc-200 transition-colors">Commander</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-zinc-950 border-b border-zinc-800 p-4 md:hidden">
+            <nav class="flex flex-col gap-4 text-center">
+                <a href="index.html" class="text-zinc-400 hover:text-white">Retour à l'accueil</a>
+                <a href="#details" class="text-white font-bold">L'Offre Web</a>
+                <a href="#order" class="text-yellow-500">Commander</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Header / Titre de la page -->
+    <section class="pt-32 pb-16 px-6 relative">
+        <div class="container mx-auto text-center reveal">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 text-xs font-bold uppercase tracking-wider mb-6 border border-yellow-500/20">
+                <i data-lucide="code-2" class="w-3 h-3"></i> Service Pro
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
+                Votre Site Web. <span class="text-yellow-500">Simple & Efficace.</span>
+            </h1>
+            <p class="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+                Une solution clé en main pour les professionnels qui veulent exister en ligne sans se ruiner ni s'abonner à vie.
+            </p>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="details" class="py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                
+                <!-- Offre Principale -->
+                <div class="reveal price-card rounded-2xl border border-zinc-700 p-8 flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+                    
+                    <h3 class="text-2xl font-bold text-white mb-2">Le Pack Essentiel</h3>
+                    <p class="text-zinc-400 text-sm mb-6">Idéal pour présenter votre activité.</p>
+                    
+                    <div class="mb-8">
+                        <span class="text-5xl font-extrabold text-white">99,99€</span>
+                        <span class="text-zinc-500 block mt-2 text-sm font-medium">Paiement unique (à vie)</span>
+                    </div>
+
+                    <ul class="check-list mb-8 flex-1">
+                        <li>
+                            <i data-lucide="layout-template"></i>
+                            <span>Site Web personnalisable (jusqu'à 3 pages)</span>
+                        </li>
+                        <li>
+                            <i data-lucide="palette"></i>
+                            <span>Design moderne et adapté mobiles</span>
+                        </li>
+                        <li>
+                            <i data-lucide="server"></i>
+                            <span><strong>Hébergement inclus</strong> (via GitHub Pages)</span>
+                        </li>
+                        <li>
+                            <i data-lucide="search-check"></i>
+                            <span>Indexation Google (SEO de base)</span>
+                        </li>
+                        <li>
+                            <i data-lucide="refresh-cw"></i>
+                            <span>2 mises à jour de contenu par an</span>
+                        </li>
+                    </ul>
+
+                    <a href="#order" class="block w-full py-3 bg-white text-black text-center rounded-lg font-bold hover:bg-zinc-200 transition-colors">
+                        Choisir l'Essentiel
+                    </a>
+                </div>
+
+                <!-- Option Mensuelle -->
+                <div class="reveal price-card rounded-2xl border border-zinc-700 p-8 flex flex-col relative overflow-hidden" style="transition-delay: 100ms;">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+
+                    <h3 class="text-2xl font-bold text-white mb-2">Le Pack Dynamique</h3>
+                    <p class="text-zinc-400 text-sm mb-6">Pour aller plus loin dans l'interaction.</p>
+                    
+                    <div class="mb-8">
+                        <span class="text-zinc-400 text-lg align-top">+</span>
+                        <span class="text-5xl font-extrabold text-white">9,99€</span>
+                        <span class="text-zinc-500 text-lg">/mois</span>
+                        <span class="text-zinc-500 block mt-2 text-sm font-medium">Sans engagement</span>
+                    </div>
+
+                    <div class="bg-zinc-900/50 p-4 rounded-lg mb-6 border border-zinc-800">
+                        <p class="text-sm text-zinc-300 italic">
+                            <i data-lucide="info" class="w-3 h-3 inline mr-1"></i>
+                            S'ajoute au Pack Essentiel
+                        </p>
+                    </div>
+
+                    <ul class="check-list mb-8 flex-1">
+                        <li>
+                            <i data-lucide="globe"></i>
+                            <span><strong>Nom de domaine personnalisé</strong> (.com, .fr...)</span>
+                        </li>
+                        <li>
+                            <i data-lucide="database"></i>
+                            <span>Petite base de données intégrée</span>
+                        </li>
+                        <li>
+                            <i data-lucide="mail-question"></i>
+                            <span>Formulaire de contact dynamique</span>
+                        </li>
+                        <li>
+                            <i data-lucide="shield-check"></i>
+                            <span>Maintenance mensuelle & sauvegardes</span>
+                        </li>
+                    </ul>
+
+                    <a href="#order" class="block w-full py-3 bg-transparent border border-zinc-600 text-white hover:bg-zinc-800 text-center rounded-lg font-bold transition-colors">
+                        Ajouter cette option
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Détails / Processus -->
+    <section class="py-16 bg-zinc-900/30 border-y border-zinc-800">
+        <div class="container mx-auto px-6 max-w-4xl text-center reveal">
+            <h2 class="text-3xl font-bold mb-12">Comment ça marche ?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center mb-4 text-yellow-500">
+                        <i data-lucide="message-square" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2">1. On échange</h4>
+                    <p class="text-zinc-400 text-sm">Vous m'expliquez votre besoin, vos couleurs et me fournissez vos textes.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center mb-4 text-yellow-500">
+                        <i data-lucide="code" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2">2. Je développe</h4>
+                    <p class="text-zinc-400 text-sm">Je crée votre site, l'optimise pour mobile et configure l'hébergement.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center mb-4 text-yellow-500">
+                        <i data-lucide="rocket" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-2">3. En ligne !</h4>
+                    <p class="text-zinc-400 text-sm">Votre site est accessible. Vous avez 2 mises à jour gratuites dans l'année.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA / Contact -->
+    <section id="order" class="py-24 relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10 text-center max-w-2xl reveal">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">Prêt à lancer votre projet ?</h2>
+            <p class="text-zinc-400 text-lg mb-8">
+                Envoyez-moi un message avec une brève description de votre activité. Je reviens vers vous sous 24h.
+            </p>
+            
+            <div class="bg-zinc-900 p-8 rounded-2xl border border-zinc-800 shadow-2xl relative">
+                
+                <!-- Message de succès (Masqué par défaut) -->
+                <div id="successMessage" class="hidden absolute inset-0 z-20 bg-zinc-900 rounded-2xl flex-col items-center justify-center p-8 fade-in">
+                    <div class="w-20 h-20 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-6 border border-green-500/20">
+                        <i data-lucide="check-circle" class="w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Message envoyé !</h3>
+                    <p class="text-zinc-400 mb-8 max-w-md mx-auto">
+                        Merci de votre confiance. J'ai bien reçu votre demande et je vous recontacterai très rapidement à l'adresse indiquée.
+                    </p>
+                    <button onclick="resetForm()" class="text-yellow-500 hover:text-yellow-300 font-semibold underline underline-offset-4 transition-colors">
+                        Envoyer un autre message
+                    </button>
+                </div>
+
+                <!-- Formulaire -->
+                <form id="contactForm" method="POST" class="flex flex-col gap-4 text-left relative z-10 transition-opacity duration-300">
+                    
+                    <!-- Configuration FormSubmit -->
+                    <!-- Remplacez grg57dev@gmail.com par votre email réel si différent -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_subject" value="Nouvelle demande - Offre Site Web">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-zinc-400 mb-1">Votre Email</label>
+                            <input type="email" name="email" required class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all placeholder-zinc-600" placeholder="vous@exemple.com">
+                        </div>
+                        <div>
+                             <label class="block text-sm font-medium text-zinc-400 mb-1">Sujet</label>
+                            <select name="sujet" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all">
+                                <option value="Pack Essentiel 99€">Pack Essentiel (99,99€)</option>
+                                <option value="Pack Dynamique">Pack Essentiel + Option Dynamique</option>
+                                <option value="Question">Juste une question</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-400 mb-1">Votre message</label>
+                        <textarea name="message" required rows="4" class="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all placeholder-zinc-600" placeholder="Parlez-moi un peu de votre projet..."></textarea>
+                    </div>
+                    
+                    <button type="submit" id="submitBtn" class="w-full py-3 bg-yellow-500 text-black font-bold rounded-lg hover:bg-yellow-400 transition-all flex justify-center items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                        <span>Envoyer la demande</span>
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-950 py-8 border-t border-zinc-900 relative z-10">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex justify-center items-center gap-2 mb-4 opacity-50 grayscale hover:grayscale-0 transition-all">
+                 <img src="https://gryphon-studio.github.io/Gryphon%20Studio.jpg" alt="Gryphon Studio" class="w-8 h-8 rounded-full">
+                 <span class="font-bold tracking-wider">GRYPHON STUDIO</span>
+            </div>
+            <p class="text-zinc-600 text-sm">
+                &copy; 2023-2024 Gryphon Studio. Tous droits réservés. <br>
+                <a href="index.html" class="hover:text-white transition-colors">Retour au site principal</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-nav');
+            } else {
+                navbar.classList.remove('glass-nav');
+            }
+        });
+
+        // --- GESTION DU FORMULAIRE AJAX ---
+        const form = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        const submitBtn = document.getElementById('submitBtn');
+        const originalBtnContent = submitBtn.innerHTML;
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Empêche le rechargement de page
+            
+            // État de chargement
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Envoi en cours...';
+            lucide.createIcons(); // Pour rafraîchir l'icône loader
+
+            const formData = new FormData(form);
+            
+            // Envoi à FormSubmit via AJAX
+            fetch("https://formsubmit.co/ajax/grg57dev@gmail.com", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Succès : Masquer formulaire, afficher succès
+                successMessage.classList.remove('hidden');
+                successMessage.style.display = 'flex'; // Force flex pour centrer
+                form.style.opacity = '0';
+                setTimeout(() => { form.style.display = 'none'; }, 300);
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert("Une erreur s'est produite lors de l'envoi. Merci de réessayer plus tard.");
+                // Reset bouton
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnContent;
+                lucide.createIcons();
+            });
+        });
+
+        function resetForm() {
+            form.reset();
+            form.style.display = 'flex';
+            setTimeout(() => { form.style.opacity = '1'; }, 10);
+            
+            successMessage.classList.add('hidden');
+            successMessage.style.display = 'none';
+            
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnContent;
+            lucide.createIcons();
+        }
+
+        // Reveal Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Background Particles
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initParticles();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 1.5;
+                this.speedX = Math.random() * 0.2 - 0.1;
+                this.speedY = Math.random() * 0.2 - 0.1;
+                this.opacity = Math.random() * 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > width) this.x = 0; else if (this.x < 0) this.x = width;
+                if (this.y > height) this.y = 0; else if (this.y < 0) this.y = height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.floor(width * 0.15);
+            for (let i = 0; i < count; i++) particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+    </script>
+</body>
+</html>
