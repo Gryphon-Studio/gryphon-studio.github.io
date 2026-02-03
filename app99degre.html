@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>99° — L'app de Gryphon Studio</title>
-    <meta name="description" content="99° — Le célèbre jeu du « Tu chauffes, tu brûles » sur mobile. Testez votre précision !">
+    <title>99° - Gryphon Studio</title>
+    <meta name="description" content="99° : Le jeu de quiz où la précision compte autant que la culture.">
     
     <!-- Favicon -->
-    <link rel="icon" href="https://gryphon-studio.github.io/99degre_app_logo.png" type="image/png">
+    <link rel="icon" href="https://gryphon-studio.github.io/favicon_transparent.png" type="image/png">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Fonts: Outfit -->
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -29,13 +29,21 @@
             overflow-x: hidden;
         }
 
-        /* Scrollbar personnalisée */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #09090b; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
 
-        /* Animations Reveal */
+        /* Masquer la scrollbar horizontale tout en gardant le scroll */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Animations */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -46,244 +54,296 @@
             transform: translateY(0);
         }
 
-        /* Glassmorphism Header (Teinte Bleu/Cyan) */
         .glass-nav {
-            background: rgba(9, 9, 11, 0.8);
+            background: rgba(9, 9, 11, 0.7);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Effets Cards (Teinte Bleu) */
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card-hover:hover {
-            border-color: rgba(56, 189, 248, 0.5);
-            transform: translateY(-5px);
-            background-color: rgba(39, 39, 42, 0.7);
-            box-shadow: 0 20px 40px -15px rgba(14, 165, 233, 0.3);
-        }
-
-        /* Fond Canvas */
         #canvas-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; opacity: 0.5; pointer-events: none;
+            z-index: -1; opacity: 0.4; pointer-events: none;
         }
-        
-        /* Gradient Text (Cyan/Sky) */
-        .text-gradient-sky {
-            background-clip: text;
+
+        /* Dégradé spécifique pour 99° */
+        .text-gradient-blue {
+            background: linear-gradient(to right, #38bdf8, #22d3ee);
             -webkit-background-clip: text;
-            color: transparent;
-            background-image: linear-gradient(to right, #ffffff, #7dd3fc, #0ea5e9);
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
 <body class="relative">
 
-    <!-- Background Animation -->
+    <!-- Background Animation Canvas -->
     <div id="canvas-container">
         <canvas id="starCanvas"></canvas>
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation (Liens adaptés pour le retour à l'accueil) -->
     <header id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
         <div class="container mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <a href="index.html" class="flex items-center gap-2 group">
-                    <div class="w-8 h-8 rounded-full overflow-hidden border border-zinc-700 group-hover:border-sky-500 transition-colors">
-                        <img src="https://gryphon-studio.github.io/Gryphon%20Studio.jpg" alt="Gryphon Mini" class="w-full h-full object-cover">
-                    </div>
-                    <span class="font-bold text-lg tracking-tight group-hover:text-white transition-colors text-zinc-300">Gryphon Studio</span>
-                </a>
-                <span class="text-zinc-600 text-xl font-light">/</span>
-                <span class="font-bold text-sky-400">99°</span>
-            </div>
+            <a href="index.html" class="text-2xl font-bold tracking-tighter flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full overflow-hidden border border-white/20">
+                    <img src="https://gryphon-studio.github.io/Gryphon%20Studio.jpg" alt="Gryphon Mini" class="w-full h-full object-cover">
+                </div>
+                <span>GRYPHON STUDIO</span>
+            </a>
             
-            <nav>
-                <a href="index.html" class="flex items-center gap-2 text-sm font-medium text-zinc-400 hover:text-sky-400 transition-colors">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    <span class="hidden sm:inline">Retour au Studio</span>
-                </a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+                <a href="index.html#home" class="hover:text-white transition-colors">Accueil</a>
+                <a href="index.html#projects" class="hover:text-white transition-colors">Nos Applications</a>
+                <a href="index.html#contact" class="hover:text-white transition-colors">Contact</a>
+            </nav>
+
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-zinc-950 border-b border-zinc-800 p-4 md:hidden">
+            <nav class="flex flex-col gap-4 text-center">
+                <a href="index.html" class="text-zinc-400 hover:text-white">Accueil</a>
+                <a href="index.html#projects" class="text-zinc-400 hover:text-white">Nos Applications</a>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 pt-20 relative">
-        <div class="reveal flex flex-col items-center max-w-4xl mx-auto">
-            
-            <!-- App Logo Large -->
-            <div class="relative mb-8 group">
-                <div class="absolute -inset-2 bg-gradient-to-tr from-sky-400 to-cyan-500 rounded-full blur-md opacity-40 group-hover:opacity-60 transition duration-500 animate-pulse"></div>
-                <div class="relative w-32 h-32 md:w-48 md:h-48 rounded-2xl overflow-hidden shadow-2xl border border-zinc-800">
-                    <img src="https://gryphon-studio.github.io/99degre_app_logo.png" alt="99° Logo" class="w-full h-full object-cover">
-                </div>
-            </div>
-
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-gradient-sky">
-                Redécouvrez le jeu du <br> « Tu chauffes, tu brûles… »
-            </h1>
-            
-            <p class="text-lg md:text-xl text-zinc-300 mb-10 max-w-2xl leading-relaxed">
-                Dans <span class="text-white font-semibold">99°</span>, votre culture générale ne suffit pas, il faut aussi avoir le compas dans l'œil ! Une image, une question, une zone précise à trouver.
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <a href="#" class="px-8 py-4 bg-white text-black rounded-xl font-bold hover:bg-sky-400 transition-all flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)] hover:-translate-y-1">
-                    <i data-lucide="play" class="w-5 h-5 fill-current"></i>
-                    <span>Télécharger Gratuitement</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 animate-bounce text-zinc-600">
-            <i data-lucide="chevron-down" class="w-8 h-8"></i>
-        </div>
-    </section>
-
-    <!-- Section: Concept & Gameplay -->
-    <section class="py-24 bg-zinc-900/50 border-y border-zinc-800/50">
+    <!-- Hero Section Produit -->
+    <section class="min-h-screen flex items-center relative pt-20 pb-12">
         <div class="container mx-auto px-6">
-            
-            <!-- Partie Supérieure : Les Grands Piliers (2 colonnes) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-                <!-- Bloc 1 : Principe -->
-                <div class="reveal space-y-4 text-center">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 text-sm font-medium">
-                        <i data-lucide="map" class="w-4 h-4"></i>
-                        <span>Le Principe</span>
-                    </div>
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">
-                        Trouvez la zone <br>
-                        <span class="text-zinc-400">au millimètre près.</span>
-                    </h2>
-                </div>
-
-                <!-- Bloc 2 : Précision -->
-                <div class="reveal space-y-4 text-center" style="transition-delay: 100ms;">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 text-sm font-medium">
-                        <i data-lucide="thermometer" class="w-4 h-4"></i>
-                        <span>Ça chauffe !</span>
-                    </div>
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">
-                        Faites monter <br>
-                        <span class="text-zinc-400">le thermomètre.</span>
-                    </h2>
-                </div>
-            </div>
-
-            <!-- Partie Inférieure : Les Étapes (3 colonnes) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-zinc-800/50">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 
-                <!-- Analysez -->
-                <div class="reveal flex flex-col items-center text-center gap-4" style="transition-delay: 200ms;">
-                    <div class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700 shrink-0">
-                        <i data-lucide="scan-eye" class="w-5 h-5 text-sky-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-white mb-2">Analysez l'image</h3>
-                        <p class="text-zinc-400 leading-relaxed">Une carte, un animal, un logo ou un objet insolite apparaît à l'écran.</p>
-                    </div>
-                </div>
-
-                <!-- Posez -->
-                <div class="reveal flex flex-col items-center text-center gap-4" style="transition-delay: 300ms;">
-                    <div class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700 shrink-0">
-                        <i data-lucide="map-pin" class="w-5 h-5 text-sky-400"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-white mb-2">Posez votre Pin</h3>
-                        <p class="text-zinc-400 leading-relaxed">Touchez l'écran exactement là où vous pensez que se trouve la réponse.</p>
+                <!-- Image / Logo (Gauche) -->
+                <div class="reveal flex justify-center lg:justify-center">
+                    <div class="relative group">
+                        <!-- Glow Effect Bleu -->
+                        <div class="absolute -inset-4 bg-sky-500/20 rounded-full blur-3xl opacity-75 group-hover:opacity-100 transition duration-1000"></div>
+                        
+                        <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-3xl overflow-hidden shadow-2xl border border-zinc-700 bg-zinc-900 transform group-hover:scale-105 transition-transform duration-500">
+                            <img src="https://gryphon-studio.github.io/99degre_app_logo.png" alt="99° Logo" class="w-full h-full object-cover">
+                        </div>
                     </div>
                 </div>
 
-                <!-- Vérifiez -->
-                <div class="reveal flex flex-col items-center text-center gap-4" style="transition-delay: 400ms;">
-                    <div class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700 shrink-0">
-                        <i data-lucide="flame" class="w-5 h-5 text-sky-400"></i>
+                <!-- Texte (Droite) -->
+                <div class="reveal text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-900/30 border border-sky-700/50 text-sky-300 text-xs font-bold uppercase tracking-wider mb-6">
+                        <i data-lucide="map-pin" class="w-3 h-3"></i> Nouvelle Version
                     </div>
-                    <div>
-                        <h3 class="text-xl font-semibold text-white mb-2">Vérifiez la température</h3>
-                        <p class="text-zinc-400 leading-relaxed">Plus vous êtes proche, plus ça chauffe ! Satisfaites l'axolotl !</p>
+                    
+                    <h1 class="text-5xl md:text-7xl font-extrabold mb-4 leading-tight">
+                        99<span class="text-gradient-blue">°</span>
+                    </h1>
+                    <h2 class="text-xl md:text-2xl text-zinc-300 font-medium mb-6">
+                        Tu chauffes, tu brûles…
+                    </h2>
+                    
+                    <p class="text-zinc-400 text-lg mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        Dans 99°, votre culture générale ne suffit pas, il faut aussi avoir le compas dans l'œil !
+                        Une image, une question, et une zone précise à trouver. À vous de poser votre "Pin" au millimètre près.
+                    </p>
+
+                    <!-- Bouton & Stats -->
+                    <div class="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start">
+                        <a href="https://play.google.com/store/apps/details?id=com.grg.degree99" target="_blank" class="group relative px-8 py-4 bg-white text-black rounded-xl font-bold transition-all hover:bg-sky-50 hover:scale-105 flex items-center gap-3 shadow-[0_0_20px_rgba(56,189,248,0.3)] hover:shadow-[0_0_30px_rgba(56,189,248,0.5)]">
+                            <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                            <span>Télécharger</span>
+                        </a>
+
+                        <div class="flex flex-col items-center lg:items-start">
+                            <span class="text-xs text-zinc-500 uppercase tracking-widest font-semibold">Joueurs actifs</span>
+                            <div class="flex items-baseline gap-1">
+                                <span id="download-counter" class="text-3xl font-bold text-sky-400">0</span>
+                                <span class="text-sm text-sky-400/60">+</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Section: Thèmes & Features -->
-    <section class="py-24 relative">
+    <!-- Section Comment Jouer (Cartes) -->
+    <section class="py-20 bg-zinc-900/50 border-y border-zinc-800/50">
         <div class="container mx-auto px-6">
-            <div class="mb-16 text-center reveal">
-                <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white">Testez vos connaissances sur <span class="text-gradient-sky">tout</span></h2>
-                <p class="text-zinc-400 max-w-2xl mx-auto text-lg">Géographie, Anatomie, Histoire, Insolite... Saurez-vous tout localiser ?</p>
+            <div class="text-center mb-16 reveal">
+                <h3 class="text-3xl font-bold mb-4">Comment jouer ?</h3>
+                <p class="text-zinc-400">Le principe est simple, mais la victoire est une question de millimètres.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Feature 1 -->
-                <div class="reveal card-hover bg-zinc-900/80 border border-zinc-800 p-6 rounded-2xl text-center group">
-                    <div class="w-14 h-14 mx-auto bg-sky-500/10 text-sky-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="globe-2" class="w-7 h-7"></i>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="reveal bg-zinc-950 p-8 rounded-2xl border border-zinc-800 hover:border-sky-500/30 transition-colors group text-center">
+                    <div class="w-16 h-16 mx-auto bg-zinc-900 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="scan-eye" class="w-8 h-8 text-sky-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Concept Unique</h3>
-                    <p class="text-sm text-zinc-400">Un mélange fun de trivia et de précision visuelle unique en son genre.</p>
+                    <h4 class="text-xl font-bold mb-3 text-white">1. Analysez</h4>
+                    <p class="text-zinc-400 text-sm leading-relaxed">
+                        Une carte, un animal, un logo ou un objet insolite apparaît. Observez bien l'image et la question.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="reveal bg-zinc-950 p-8 rounded-2xl border border-zinc-800 hover:border-sky-500/30 transition-colors group text-center" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 mx-auto bg-zinc-900 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="map-pin" class="w-8 h-8 text-sky-400"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3 text-white">2. Posez votre Pin</h4>
+                    <p class="text-zinc-400 text-sm leading-relaxed">
+                        Touchez l'écran là où vous pensez que se trouve la réponse précise. Soyez minutieux !
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="reveal bg-zinc-950 p-8 rounded-2xl border border-zinc-800 hover:border-sky-500/30 transition-colors group text-center" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 mx-auto bg-zinc-900 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="flame" class="w-8 h-8 text-orange-400"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3 text-white">3. Vérifiez la T°</h4>
+                    <p class="text-zinc-400 text-sm leading-relaxed">
+                        Plus vous êtes proche, plus ça chauffe ! Faites monter le thermomètre pour satisfaire l'axolotl.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Galerie en Éventail -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="container mx-auto px-6 reveal text-center">
+            <h3 class="text-3xl font-bold mb-12">Aperçus du jeu</h3>
+            
+            <!-- Conteneur style "Éventail" (Fan Layout) -->
+            <!-- Sur mobile : Scroll horizontal. Sur Desktop : Éventail centré avec chevauchement -->
+            <div class="flex flex-col justify-center items-center">
+                
+                <!-- Zone des cartes -->
+                <div class="flex overflow-x-auto md:overflow-visible hide-scrollbar w-full md:w-auto px-4 md:px-20 pb-12 pt-10 gap-4 md:gap-0 md:-space-x-24 items-center">
+                    
+                    <!-- Image 1 (Gauche Extrême) -->
+                    <div class="flex-none w-64 h-[400px] relative group transition-all duration-500 hover:z-50 hover:!translate-x-0">
+                        <div class="w-full h-full rounded-2xl overflow-hidden border-4 border-zinc-800 relative shadow-2xl bg-zinc-900 transform md:-rotate-12 md:translate-y-8 group-hover:scale-110 group-hover:rotate-0 group-hover:-translate-y-2 group-hover:border-sky-500/50 transition-all duration-500 ease-out origin-bottom">
+                            <img src="https://gryphon-studio.github.io/99deg_screen1.png" alt="Screenshot 1" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <!-- Overlay gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500"></div>
+                        </div>
+                    </div>
+
+                    <!-- Image 2 (Gauche) -->
+                    <div class="flex-none w-64 h-[400px] relative group transition-all duration-500 hover:z-50 hover:!translate-x-0">
+                        <div class="w-full h-full rounded-2xl overflow-hidden border-4 border-zinc-800 relative shadow-2xl bg-zinc-900 transform md:-rotate-6 md:translate-y-4 group-hover:scale-110 group-hover:rotate-0 group-hover:-translate-y-2 group-hover:border-sky-500/50 transition-all duration-500 ease-out origin-bottom">
+                            <img src="https://gryphon-studio.github.io/99deg_screen2.png" alt="Screenshot 2" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500"></div>
+                        </div>
+                    </div>
+
+                    <!-- Image 3 (Centre - Focus) -->
+                    <div class="flex-none w-64 h-[400px] relative group transition-all duration-500 hover:z-50 hover:!translate-x-0 z-10">
+                        <div class="w-full h-full rounded-2xl overflow-hidden border-4 border-zinc-700 relative shadow-2xl bg-zinc-900 transform md:rotate-0 md:-translate-y-2 group-hover:scale-110 group-hover:-translate-y-6 group-hover:border-sky-500/50 transition-all duration-500 ease-out origin-bottom">
+                            <img src="https://gryphon-studio.github.io/99deg_screen3.png" alt="Screenshot 3" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <!-- Image 4 (Droite) -->
+                    <div class="flex-none w-64 h-[400px] relative group transition-all duration-500 hover:z-50 hover:!translate-x-0">
+                        <div class="w-full h-full rounded-2xl overflow-hidden border-4 border-zinc-800 relative shadow-2xl bg-zinc-900 transform md:rotate-6 md:translate-y-4 group-hover:scale-110 group-hover:rotate-0 group-hover:-translate-y-2 group-hover:border-sky-500/50 transition-all duration-500 ease-out origin-bottom">
+                            <img src="https://gryphon-studio.github.io/99deg_screen4.png" alt="Screenshot 4" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500"></div>
+                        </div>
+                    </div>
+
+                     <!-- Image 5 (Droite Extrême) -->
+                     <div class="flex-none w-64 h-[400px] relative group transition-all duration-500 hover:z-50 hover:!translate-x-0">
+                        <div class="w-full h-full rounded-2xl overflow-hidden border-4 border-zinc-800 relative shadow-2xl bg-zinc-900 transform md:rotate-12 md:translate-y-8 group-hover:scale-110 group-hover:rotate-0 group-hover:-translate-y-2 group-hover:border-sky-500/50 transition-all duration-500 ease-out origin-bottom">
+                            <img src="https://gryphon-studio.github.io/99deg_screen5.png" alt="Screenshot 5" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <!-- Indicateur de scroll mobile -->
+            <div class="flex justify-center md:hidden text-zinc-600 gap-2 text-xs items-center">
+                <i data-lucide="arrow-left" class="w-3 h-3"></i> Glisser <i data-lucide="arrow-right" class="w-3 h-3"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Pourquoi (Feature List - Redesigned & Airy) -->
+    <section class="py-32 relative overflow-hidden">
+        <!-- Déco background : Halo central subtil -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sky-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            
+            <!-- En-tête de section centré -->
+            <div class="text-center mb-20 reveal">
+                <h3 class="text-4xl md:text-5xl font-bold mb-6">Pourquoi télécharger <span class="text-sky-400">99°</span> ?</h3>
+                <p class="text-zinc-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                    Plus qu'un simple jeu, une expérience qui teste vos limites. Voici 4 bonnes raisons de vous lancer.
+                </p>
+            </div>
+            
+            <!-- Grille de cartes aérées -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+                
+                <!-- Feature 1 -->
+                <div class="reveal group p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800 hover:border-sky-500/40 hover:bg-zinc-900/80 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2">
+                    <div class="w-16 h-16 rounded-2xl bg-zinc-800/50 border border-zinc-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-sky-500/10 group-hover:border-sky-500/30 transition-all">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-sky-400"></i>
+                    </div>
+                    <h5 class="text-xl font-bold text-white mb-3">Concept unique</h5>
+                    <p class="text-zinc-400 leading-relaxed text-sm">Un mélange fun de trivia et de précision visuelle. Changez des quiz classiques.</p>
                 </div>
 
                 <!-- Feature 2 -->
-                <div class="reveal card-hover bg-zinc-900/80 border border-zinc-800 p-6 rounded-2xl text-center group" style="transition-delay: 100ms;">
-                    <div class="w-14 h-14 mx-auto bg-cyan-500/10 text-cyan-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="layers" class="w-7 h-7"></i>
+                <div class="reveal group p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800 hover:border-sky-500/40 hover:bg-zinc-900/80 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 rounded-2xl bg-zinc-800/50 border border-zinc-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-sky-500/10 group-hover:border-sky-500/30 transition-all">
+                        <i data-lucide="layers" class="w-8 h-8 text-sky-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Centaines de Niveaux</h3>
-                    <p class="text-sm text-zinc-400">Une difficulté progressive et des thèmes variés pour ne jamais s'ennuyer.</p>
+                    <h5 class="text-xl font-bold text-white mb-3">Centaines de niveaux</h5>
+                    <p class="text-zinc-400 leading-relaxed text-sm">Une difficulté progressive pour ne jamais s'ennuyer, du débutant à l'expert.</p>
                 </div>
 
                 <!-- Feature 3 -->
-                <div class="reveal card-hover bg-zinc-900/80 border border-zinc-800 p-6 rounded-2xl text-center group" style="transition-delay: 200ms;">
-                    <div class="w-14 h-14 mx-auto bg-sky-500/10 text-sky-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="graduation-cap" class="w-7 h-7"></i>
+                <div class="reveal group p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800 hover:border-sky-500/40 hover:bg-zinc-900/80 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 rounded-2xl bg-zinc-800/50 border border-zinc-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-sky-500/10 group-hover:border-sky-500/30 transition-all">
+                        <i data-lucide="brain-circuit" class="w-8 h-8 text-sky-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Apprenez en Jouant</h3>
-                    <p class="text-sm text-zinc-400">Développez votre culture générale visuelle de manière ludique.</p>
+                    <h5 class="text-xl font-bold text-white mb-3">Culture visuelle</h5>
+                    <p class="text-zinc-400 leading-relaxed text-sm">Développez vos connaissances en géographie, anatomie et bien plus encore.</p>
                 </div>
 
                 <!-- Feature 4 -->
-                <div class="reveal card-hover bg-zinc-900/80 border border-zinc-800 p-6 rounded-2xl text-center group" style="transition-delay: 300ms;">
-                    <div class="w-14 h-14 mx-auto bg-cyan-500/10 text-cyan-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                        <i data-lucide="zap" class="w-7 h-7"></i>
+                <div class="reveal group p-8 rounded-3xl bg-zinc-900/40 border border-zinc-800 hover:border-sky-500/40 hover:bg-zinc-900/80 transition-all duration-300 flex flex-col items-center text-center hover:-translate-y-2" style="transition-delay: 300ms;">
+                    <div class="w-16 h-16 rounded-2xl bg-zinc-800/50 border border-zinc-700 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-sky-500/10 group-hover:border-sky-500/30 transition-all">
+                        <i data-lucide="zap" class="w-8 h-8 text-sky-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Parties Rapides</h3>
-                    <p class="text-sm text-zinc-400">Idéal pour passer le temps, que vous ayez 2 minutes ou 1 heure devant vous.</p>
+                    <h5 class="text-xl font-bold text-white mb-3">Parties rapides</h5>
+                    <p class="text-zinc-400 leading-relaxed text-sm">Idéal pour passer le temps, que vous ayez 2 minutes ou 1 heure devant vous.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- CTA Finale -->
-    <section class="py-24 relative overflow-hidden border-t border-zinc-800">
-        <!-- Background Glow (Sky) -->
-        <div class="absolute inset-0 bg-gradient-to-b from-zinc-950 to-sky-900/20 z-0"></div>
-        
-        <div class="container mx-auto px-6 relative z-10 text-center reveal">
-            <h2 class="text-4xl md:text-6xl font-extrabold mb-8 text-white">
-                Prêt à faire grimper la <span class="text-sky-400">température</span> ?
-            </h2>
-            <p class="text-xl text-zinc-300 mb-10 max-w-2xl mx-auto">
-                Montrez que vous ne faites pas les choses à moitié.
-            </p>
-            
-            <div class="flex flex-col items-center gap-6">
-                <a href="#" class="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-white text-black rounded-full font-bold text-lg hover:bg-zinc-200 transition-all shadow-xl hover:scale-105">
+            <!-- CTA Final séparé et mis en valeur -->
+            <div class="reveal text-center max-w-3xl mx-auto bg-gradient-to-b from-zinc-900 to-zinc-950 border border-zinc-800 p-10 md:p-14 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
+                <!-- Effet de brillance interne -->
+                <div class="absolute inset-0 bg-sky-500/5 pointer-events-none"></div>
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-sky-500/10 blur-[60px] rounded-full pointer-events-none"></div>
+                
+                <h4 class="text-2xl md:text-4xl font-extrabold mb-4 relative z-10 text-white">
+                    "Prêt à faire grimper la température ?"
+                </h4>
+                <p class="text-zinc-400 mb-10 text-lg relative z-10 font-medium">Montrez que vous ne faites pas les choses à moitié !</p>
+                
+                <a href="https://play.google.com/store/apps/details?id=com.grg.degree99" class="relative z-10 inline-flex items-center gap-3 px-8 py-4 bg-sky-500 hover:bg-sky-400 text-black font-extrabold text-lg rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(56,189,248,0.3)] hover:shadow-[0_0_50px_rgba(56,189,248,0.5)]">
                     <i data-lucide="download" class="w-6 h-6"></i>
-                    <span>Télécharger maintenant</span>
-                    <div class="absolute -inset-3 bg-white/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    Télécharger 99°
                 </a>
-                <p class="text-sm text-zinc-500">Disponible gratuitement sur Google Play</p>
             </div>
+
         </div>
     </section>
 
@@ -295,42 +355,78 @@
                  <span class="font-bold tracking-wider">GRYPHON STUDIO</span>
             </div>
             <p class="text-zinc-600 text-sm">
-                &copy; <span id="year"></span> Gryphon Studio. Tous droits réservés.
+                &copy; 2023-2024 Gryphon Studio. Tous droits réservés. <br>
+                <a href="#" class="hover:text-white transition-colors">Mentions Légales</a>
             </p>
         </div>
     </footer>
 
     <script>
-        // Initialisation Lucide
+        // --- 1. Initialisation Icônes ---
         lucide.createIcons();
-        document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Navbar Scroll Effect
+        // --- 2. Menu Mobile ---
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // --- 3. Header Glassmorphism ---
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('glass-nav');
-            } else {
-                navbar.classList.remove('glass-nav');
-            }
+            if (window.scrollY > 50) navbar.classList.add('glass-nav');
+            else navbar.classList.remove('glass-nav');
         });
 
-        // Reveal Animation
+        // --- 4. Animations Scroll ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
+                    observer.unobserve(entry.target); 
                 }
             });
-        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Particles Animation (Cool/Sky tone)
+        // --- 5. Animation Compteur "Maison" ---
+        function animateCounter(id, target, duration) {
+            const element = document.getElementById(id);
+            const start = 0;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Fonction d'easing (ralentissement à la fin)
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                
+                const current = Math.floor(start + (target - start) * easeOut);
+                element.innerText = current;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.innerText = target; // S'assurer qu'on finit bien sur la cible
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        // Lancer l'animation du compteur au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            animateCounter('download-counter', 300, 2000); // Cible: 300, Durée: 2000ms
+        });
+
+        // --- 6. Background Interactif (Exactement le même que l'index) ---
         const canvas = document.getElementById('starCanvas');
         const ctx = canvas.getContext('2d');
         let width, height, particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+        window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
 
         function resize() {
             width = window.innerWidth;
@@ -344,23 +440,36 @@
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.size = Math.random() * 2;
-                this.speedX = Math.random() * 0.2 - 0.1;
-                this.speedY = Math.random() * 0.2 - 0.1;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
                 this.opacity = Math.random() * 0.5;
-                // Mix of white and sky blue
-                this.color = Math.random() > 0.7 ? 'rgba(56, 189, 248,' : 'rgba(255, 255, 255,'; 
+                this.density = (Math.random() * 30) + 1; 
             }
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                if (this.x > width) this.x = 0;
-                if (this.x < 0) this.x = width;
-                if (this.y > height) this.y = 0;
-                if (this.y < 0) this.y = height;
+
+                if (mouse.x != undefined && mouse.y != undefined) {
+                    let dx = this.x - mouse.x;
+                    let dy = this.y - mouse.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        this.x += forceDirectionX * force * this.density;
+                        this.y += forceDirectionY * force * this.density;
+                    }
+                }
+
+                if (this.x > width + 50) this.x = -50;
+                if (this.x < -50) this.x = width + 50;
+                if (this.y > height + 50) this.y = -50;
+                if (this.y < -50) this.y = height + 50;
             }
             draw() {
-                ctx.fillStyle = `${this.color} ${this.opacity})`;
+                ctx.fillStyle = `rgba(135, 206, 235, ${this.opacity})`; // Bleu ciel très pâle (SkyBlue)
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -369,18 +478,13 @@
 
         function initParticles() {
             particles = [];
-            const particleCount = Math.floor(width * 0.08);
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
+            const particleCount = (width * height) / 9000; 
+            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
         }
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
 
